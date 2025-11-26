@@ -35,6 +35,4 @@ Tailwind CSS
 
 Zustand
 
-React Query (optional)
-
 Framer Motion
