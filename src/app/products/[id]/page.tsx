@@ -1,12 +1,13 @@
-import { getProducts } from "@/lib/getProducts";
+/// <reference types="react" />
+import { getProducts } from "../../../lib/getProducts";
 
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+   params: Promise<any> | any;
 }) {
   const products = await getProducts();
-  const product = products.find((p) => p.id === params.id);
+  const product = products.find((p: { id: string; }) => p.id === params.id);
 
   if (!product) return <div>Product not found</div>;
 
@@ -25,13 +26,6 @@ export default async function ProductPage({
             ${product.price.toFixed(2)}
           </div>
         </div>
-      </div>
-
-      <div className="mt-6">
-        <h2 className="text-lg font-medium">Details</h2>
-        <p className="text-slate-600">
-          {product.details || "No extra details."}
-        </p>
       </div>
     </div>
   );
