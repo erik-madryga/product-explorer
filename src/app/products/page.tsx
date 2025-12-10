@@ -1,9 +1,9 @@
 import React from "react";
-import ProductGrid from "@/components/ProductGrid";
-import Filters from "@/components/Filters";
-import SearchBar from "@/components/SearchBar";
-import SortMenu from "@/components/SortMenu";
-import { getProducts } from "@/lib/getProducts";
+import ProductGrid from "../../components/ProductGrid";
+import SearchBar from "../../components/SearchBar";
+import { getProducts } from "../../lib/getProducts";
+
+const ProductGridComponent = ProductGrid as unknown as React.ComponentType<{ initialProducts: any }>;
 
 export default async function ProductsPage({
   searchParams,
@@ -17,15 +17,11 @@ export default async function ProductsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <SearchBar />
-        <SortMenu />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <aside className="hidden lg:block">
-          <Filters />
-        </aside>
         <section className="lg:col-span-3">
-          <ProductGrid initialProducts={products} />
+          <ProductGridComponent initialProducts={products} />
         </section>
       </div>
     </div>

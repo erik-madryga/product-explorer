@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 html,
 body,
 #__next {
@@ -9,9 +5,11 @@ body,
 }
 
 body {
-  @apply bg-white text-slate-900;
+  background-color: white;
+  color: #1e293b;
 }
 
 .dark body {
-  @apply bg-slate-900 text-slate-100;
+  background-color: #1e293b;
+  color: #f1f5f9;
 }

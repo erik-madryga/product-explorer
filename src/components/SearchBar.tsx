@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useProductStore } from "@/store/productStore";
+import { useProductStore } from "../store/productStore";
 
 function useDebounce<T>(value: T, delay = 300) {
   const [debounced, setDebounced] = useState(value);

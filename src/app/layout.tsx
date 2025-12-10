@@ -1,6 +1,6 @@
-import "./styles/globals.css";
+import "../styles/globals.css";
 import React from "react";
-import Header from "@/components/Header";
+import Header from "../components/Header";
 
 export const metadata = {
   title: "Product Explorer",
