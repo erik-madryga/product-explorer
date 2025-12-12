@@ -1,6 +1,7 @@
 import Link from "next/link";
-import DarkToggle from "./DarkToggle";
+import { CartIcon } from "./CartIcon";
 import SearchBar from "./SearchBar";
+import { SignInModal } from "./SignInModal";
 
 export default function Header() {
   return (
@@ -12,12 +13,13 @@ export default function Header() {
         <div className="flex-1 mx-4">
           <SearchBar />
         </div>
-        <div className="flex items-center gap-4">
-          <button
-            className="bg-yellow-500 text-purple-700 px-3 py-1 rounded-md font-medium hover:bg-yellow-400"
-          >
-            Sign-in
-          </button>
+        <div className="flex items-center gap-4 mr-3">
+          
+          <SignInModal />
+          <Link href="/cart" className="flex items-center p-1 rounded hover:bg-yellow-600/10">
+            <CartIcon className="text-yellow-500" />
+            <span className="sr-only">View cart</span>
+          </Link>
         </div>
       </div>
     </header>

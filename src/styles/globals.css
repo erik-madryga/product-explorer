@@ -1,4 +1,15 @@
+/* Load CoreUI first */
+@import "@coreui/coreui/dist/css/coreui.min.css";
+
+/* Load Tailwind last */
 @import "tailwindcss";
+
+@layer utilities {
+  button, input, textarea, select {
+    all: revert-layer;
+  }
+}
+
 html,
 body,
 #__next {
