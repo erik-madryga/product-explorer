@@ -1,38 +1,21 @@
-🛒 Product Explorer
+# 🛒 Product Explorer
 
 A modern E-commerce product browsing experience built with Next.js 15, React, and TypeScript.
 Includes search-as-you-type, real filters, sorting, infinite scroll, and polished UI components.
 
-✨ Features
+## Developing
 
-🔍 Instant search with debounce
+### Install
+```
+yarn
+```
 
-🎚️ Filters (price, category, rating)
+### Build
+```
+yarn build
+```
 
-↕️ Sorting (price, rating, popularity)
-
-♾️ Infinite scroll
-
-🌓 Dark mode
-
-⚡ Framer-motion transitions
-
-💾 LocalStorage cart persistence
-
-🧱 Fully responsive layout
-
-🧩 Reusable components + Zustand store
-
-📦 Tech Stack
-
-Next.js 15
-
-React
-
-TypeScript
-
-Tailwind CSS
-
-Zustand
-
-Framer Motion
+### Running Locally
+```
+yarn dev
+```
