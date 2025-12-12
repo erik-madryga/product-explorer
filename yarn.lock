@@ -24,6 +24,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@coreui/icons-react@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@coreui/icons-react@npm:2.3.0"
+  peerDependencies:
+    react: ">=17"
+    react-dom: ">=17"
+  checksum: 10c0/6bbe49a22d99c5fd0f31abdf77f75b8cc2ca009c6c51d9ee9ead8bd325244cd9485a9b8d37df46868c2696f929568351c33e7f10265dd4ba7999068d5e789b29
+  languageName: node
+  linkType: hard
+
+"@coreui/icons@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@coreui/icons@npm:3.0.1"
+  checksum: 10c0/306b36499d0db639b61f9c76c8d1e22a3605f5f85268d16a24fb1a30561a823c3a6c85ebc1d0d527f449b55128ebd5686a9e21af626184d4389812ca8ebbb05b
+  languageName: node
+  linkType: hard
+
 "@coreui/react@npm:5.9.1":
   version: 5.9.1
   resolution: "@coreui/react@npm:5.9.1"
@@ -1466,6 +1483,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "product-explorer@workspace:."
   dependencies:
+    "@coreui/icons": "npm:^3.0.1"
+    "@coreui/icons-react": "npm:^2.3.0"
     "@coreui/react": "npm:5.9.1"
     "@headlessui/react": "npm:^2.2.9"
     "@heroicons/react": "npm:^2.0.18"

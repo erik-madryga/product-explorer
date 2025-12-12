@@ -7,7 +7,8 @@ import {
   CCardText,
   CButton,
 } from "@coreui/react";
-import { getProducts } from "../../../lib/getProducts";
+import { getData } from "../../../lib/getData";
+import { PRODUCTS } from "../../../constants/strings";
 
 export default async function ProductPage({
   params,
@@ -15,7 +16,7 @@ export default async function ProductPage({
   params: { id: string };
 }) {
   const waitedParams = await params;
-  const products = await getProducts();
+  const products = await getData(PRODUCTS);
   const product = products.find(
     ({ id }: { id: number }) => id == Number(waitedParams.id)
   );
@@ -51,6 +52,9 @@ export default async function ProductPage({
           </CCardText>
         </div>
       </CCardBody>
+      <button className="w-full border-2 border-yellow-500 bg-yellow-500 text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-yellow-400">
+        Add to Cart
+      </button>
     </CCard>
   );
 }

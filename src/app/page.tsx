@@ -1,7 +1,7 @@
 import React from "react";
 import ProductGrid from "../components/ProductGrid";
 import SearchBar from "../components/SearchBar";
-import { getProducts } from "../lib/getProducts";
+import { getData } from "../lib/getData";
 
 const ProductGridComponent = ProductGrid as unknown as React.ComponentType<{ initialProducts: any }>;
 
@@ -11,7 +11,7 @@ export default async function Home({
   searchParams?: any;
 }) {
   // Server component loads initial product set (static/mock)
-  const products = await getProducts();
+  const products = await getData('products');
 
   return (
     <div className="space-y-6">

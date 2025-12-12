@@ -1,0 +1,56 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "title": "Wireless Bluetooth Headphones",
+            "price": 79.99,
+            "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
+            "rating": {
+                "rate": 4.5,
+                "count": 328
+            },
+            "category": "electronics",
+            "description": "High-quality wireless headphones with active noise cancellation and 30-hour battery life.",
+            "popularity": 95
+        },
+        {
+            "id": 2,
+            "title": "Ergonomic Office Chair",
+            "price": 249.99,
+            "image": "https://images.unsplash.com/photo-1598928506696-6d6f9f3b1d6f?w=500",
+            "rating": {
+                "rate": 4.2,
+                "count": 156
+            },
+            "category": "furniture",
+            "description": "Premium ergonomic chair with lumbar support and adjustable armrests for all-day comfort.",
+            "popularity": 82
+        },
+        {
+            "id": 3,
+            "title": "USB-C Fast Charger",
+            "price": 29.99,
+            "image": "https://images.unsplash.com/photo-1591290621490-461ea39f7e2b?w=500",
+            "rating": {
+                "rate": 4.7,
+                "count": 512
+            },
+            "category": "electronics",
+            "description": "65W fast charging adapter compatible with most USB-C devices.",
+            "popularity": 88
+        },
+        {
+            "id": 4,
+            "title": "Mechanical Keyboard RGB",
+            "price": 119.99,
+            "image": "https://images.unsplash.com/photo-1587829191301-9651f01f3e1b?w=500",
+            "rating": {
+                "rate": 4.6,
+                "count": 284
+            },
+            "category": "electronics",
+            "description": "Premium mechanical keyboard with customizable RGB lighting and tactile switches.",
+            "popularity": 91
+        }
+    ]
+}
