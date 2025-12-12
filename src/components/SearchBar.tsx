@@ -12,9 +12,8 @@ function useDebounce<T>(value: T, delay = 300) {
 }
 
 export default function SearchBar() {
-  const setSearch = useProductStore((s) => s.setSearch);
-  const [val, setVal] = useState("");
-  const debounced = useDebounce(val, 300);
+    const { search, setSearch } = useProductStore();
+    const debounced = useDebounce(search, 300);
 
   useEffect(() => {
     setSearch(debounced);
@@ -22,8 +21,8 @@ export default function SearchBar() {
 
   return (
     <input
-      value={val}
-      onChange={(e) => setVal(e.target.value)}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
       placeholder="Search products..."
       className="w-full max-w-md border rounded px-3 py-2"
     />
