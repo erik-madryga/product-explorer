@@ -6,11 +6,11 @@ body,
 }
 
 body {
-  background-color: white;
+  background-color: rgb(225, 223, 226);
   color: #1e293b;
 }
 
 .dark body {
-  background-color: #1e293b;
+  background-color: #3f3f40;
   color: #f1f5f9;
 }

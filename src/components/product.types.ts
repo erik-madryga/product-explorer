@@ -7,7 +7,10 @@ export interface Product {
   title: string
   price: number
   image: string
-  rating: number
+  rating: {
+    rate: number
+    count: number
+  }
   category: string
   description: string
   popularity: number

@@ -1,18 +1,25 @@
-import Link from "next/link";
+import React from "react";
+import ProductGrid from "../components/ProductGrid";
+import SearchBar from "../components/SearchBar";
+import { getProducts } from "../lib/getProducts";
 
-export default function Home() {
+const ProductGridComponent = ProductGrid as unknown as React.ComponentType<{ initialProducts: any }>;
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: any;
+}) {
+  // Server component loads initial product set (static/mock)
+  const products = await getProducts();
+
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Product Explorer</h1>
-      <p className="text-slate-600">
-        A demo e-commerce UI showing search, filters, and product pages.
-      </p>
-      <Link
-        href="/products"
-        className="inline-block px-4 py-2 bg-indigo-600 text-white rounded-md"
-      >
-        Browse Products
-      </Link>
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <section className="lg:col-span-3">
+          <ProductGridComponent initialProducts={products} />
+        </section>
+      </div>
     </div>
   );
 }
