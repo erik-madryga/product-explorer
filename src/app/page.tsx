@@ -1,9 +1,8 @@
-import React from "react";
-import ProductGrid from "../components/ProductGrid";
-import SearchBar from "../components/SearchBar";
-import { getData } from "../lib/getData";
+import React, { use } from "react";
+import ProductPageGrid from "../components/Product/ProductPageGrid";
+import { fetchProducts } from "../lib/fakeStoreApi";
 
-const ProductGridComponent = ProductGrid as unknown as React.ComponentType<{ initialProducts: any }>;
+const ProductPageGridComponent = ProductPageGrid as unknown as React.ComponentType<{ initialProducts: any }>;
 
 export default async function Home({
   searchParams,
@@ -11,13 +10,13 @@ export default async function Home({
   searchParams?: any;
 }) {
   // Server component loads initial product set (static/mock)
-  const products = await getData('products');
+  const products = await fetchProducts();
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <section className="lg:col-span-3">
-          <ProductGridComponent initialProducts={products} />
+          <ProductPageGridComponent initialProducts={products} />
         </section>
       </div>
     </div>

@@ -9,6 +9,7 @@ import {
 } from "@coreui/react";
 
 import { ProductProps } from "./product.types.js";
+import Link from "next/link.js";
 
 export default function ProductCard({ product }: ProductProps) {
   const handleViewDetails = () => {
@@ -40,7 +41,7 @@ export default function ProductCard({ product }: ProductProps) {
         <CCardText className="text-sm">
           <strong>Rating:</strong> {product.rating.rate} / 5
         </CCardText>
-        <CButton href={`products/${product.id}`} className="underline">View Details</CButton>
+        <Link href={`products/${product.id}`} className="underline">View Details</Link>
         </div>
       </CCardBody>
     </CCard>

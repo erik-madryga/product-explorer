@@ -1,4 +1,11 @@
 {
+    "users": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john.doe@example.com"
+        }
+    ],
     "products": [
         {
             "id": 1,
@@ -51,6 +58,23 @@
             "category": "electronics",
             "description": "Premium mechanical keyboard with customizable RGB lighting and tactile switches.",
             "popularity": 91
+        }
+    ],
+    "cart": [
+        {
+            "id": 1,
+            "userId": 1,
+            "date": "2024-06-15",
+            "products": [
+                {
+                    "productId": 1,
+                    "quantity": 1
+                },
+                {
+                    "productId": 3,
+                    "quantity": 2
+                }
+            ]
         }
     ]
 }

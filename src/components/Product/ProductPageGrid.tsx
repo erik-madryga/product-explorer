@@ -1,18 +1,16 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { useProductStore } from "../store/productStore";
+import { useProductStore } from "../../store/productStore";
 import { Product } from "./product.types";
 
-export default function ProductGrid({
+export default function ProductPageGrid({
   initialProducts,
 }: {
   initialProducts: Product[];
 }) {
-  const { search, filters, sort } = useProductStore();
+  const { search, filters, sort, products, setProducts } = useProductStore();
   const [loading, setLoading] = useState(false);
-  const [filteredProducts, setFilteredProducts] = useState(initialProducts);
-
   useEffect(() => {
     let result = [...initialProducts];
 
@@ -43,16 +41,16 @@ export default function ProductGrid({
     if (sort === "price-desc") result.sort((a, b) => b.price - a.price);
     if (sort === "rating-desc") result.sort((a, b) => b.rating.rate - a.rating.rate);
 
-    setFilteredProducts(result);
+    setProducts(result);
   }, [search, filters, sort]);
 
   return (<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {loading ? (
         <p>Loading products...</p>
-      ) : filteredProducts && filteredProducts.length === 0 ? (
+      ) : products && products.length === 0 ? (
         <p>No products found.</p>
       ) : (
-        filteredProducts.map((product) => (
+        products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))
       )}
