@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import ProductPageGrid from "../components/Product/ProductPageGrid";
 import { fetchProducts } from "../lib/fakeStoreApi";
 
