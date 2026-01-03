@@ -3,7 +3,6 @@ import mockedProductData from "./mockedData.json"
 export async function getData(param?: string) {
   // If you want to use the real API, uncomment the code below and comment out the mocked data return statement.
   const url = "https://fakestoreapi.com/"+ (param ? param : PRODUCTS);
-  console.log("Fetching data from URL:", url);
   try {
     const response = await fetch(url);
     if (!response.ok) {
