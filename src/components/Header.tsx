@@ -21,7 +21,7 @@ export default function Header({ users }: { users: User[] }) {
           <SignInModal users={users} />
           
           <Link href={user ? `/carts/${user.id}`: "#"} className="flex items-center p-1 rounded hover:bg-yellow-600/10">
-            <CartIcon className="text-yellow-500" />
+            <CartIcon />
             <span className="sr-only">View cart</span>
           </Link>
         </div>

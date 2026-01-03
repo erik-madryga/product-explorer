@@ -1,7 +1,3 @@
-/* Load CoreUI first */
-@import "@coreui/coreui/dist/css/coreui.min.css";
-
-/* Load Tailwind last */
 @import "tailwindcss";
 
 @layer utilities {
@@ -10,11 +6,7 @@
   }
 }
 
-html,
-body,
-#__next {
-  height: 100%;
-}
+html
 
 body {
   background-color: rgb(225, 223, 226);
@@ -24,4 +16,8 @@ body {
 .dark body {
   background-color: #3f3f40;
   color: #f1f5f9;
+}
+
+.gold-fill {
+  fill: gold !important;
 }
