@@ -2,7 +2,7 @@ import CartPageGrid from '../../../components/Cart/CartPageGrid';
 import { fetchCart } from '../../../lib/fakeStoreApi';
 
 
-export default async function Page({ params }: { params: { userId: string } }) {
+export default async function Page({ params }: { params: Promise<{ userId: string }> }) {
   const cartParams = await params;
   const initialCart = await fetchCart(cartParams.userId);
   return (
