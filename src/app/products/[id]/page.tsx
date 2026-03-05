@@ -13,7 +13,7 @@ import { PRODUCTS } from "../../../constants/strings";
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const waitedParams = await params;
   const products = await getData(PRODUCTS);
