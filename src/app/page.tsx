@@ -11,6 +11,7 @@ export default async function Home({
 }) {
   // Server component loads initial product set (static/mock)
   const products = await fetchProducts();
+  console.log("Initial products loaded in server component:", products.length);
 
   return (
     <div className="space-y-6">
