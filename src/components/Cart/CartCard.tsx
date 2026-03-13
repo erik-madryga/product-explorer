@@ -9,8 +9,7 @@ import {
   CCardTitle,
 } from "@coreui/react";
 import { Cart } from "./cart.types";
-import { getData } from "../../lib/getData"; // adjust path if needed
-import { PRODUCTS } from "../../constants/strings"; // adjust path if needed
+import { fetchProducts } from "../../lib/fakeStoreApi"; // adjust path if needed
 
 interface CartCardProps {
   cart: Cart;
@@ -23,7 +22,7 @@ export default function CartCard({ cart, onViewDetails }: CartCardProps) {
 
   useEffect(() => {
     if (!products || products.length === 0) {
-      getData(PRODUCTS).then((fetchedProducts) => {
+      fetchProducts().then((fetchedProducts) => {
         setProducts(fetchedProducts);
       });
     }
