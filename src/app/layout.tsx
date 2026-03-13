@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import React from "react";
 import Header from "../components/Header";
 import { USERS } from "../constants/strings";
-import { getData } from "../lib/getData";
+import { fetchUsers } from "../lib/fakeStoreApi";
 
 // commenting out metadata to fix build error until i resolve use client usage
 export const metadata = {
@@ -17,7 +17,7 @@ export default async function RootLayout({
 }) {
 
   // Server component loads initial product set (static/mock)
-  const users = await getData(USERS);
+  const users = await fetchUsers();
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>

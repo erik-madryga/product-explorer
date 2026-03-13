@@ -7,8 +7,7 @@ import {
   CCardText,
   CButton,
 } from "@coreui/react";
-import { getData } from "../../../lib/getData";
-import { PRODUCTS } from "../../../constants/strings";
+import { fetchProducts } from "../../../lib/fakeStoreApi";
 
 export default async function ProductPage({
   params,
@@ -16,7 +15,7 @@ export default async function ProductPage({
   params: Promise<{ id: string }>;
 }) {
   const waitedParams = await params;
-  const products = await getData(PRODUCTS);
+  const products = await fetchProducts();
   const product = products.find(
     ({ id }: { id: number }) => id == Number(waitedParams.id)
   );
