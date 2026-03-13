@@ -17,7 +17,7 @@ export default async function ProductPage({
   const waitedParams = await params;
   const products = await fetchProducts();
   const product = products.find(
-    ({ id }: { id: number }) => id == Number(waitedParams.id)
+    ({ id }: { id: number }) => id == Number(waitedParams.id || 1)
   );
 
   if (!product) return <div>Product not found</div>;
