@@ -35,7 +35,7 @@ export async function fetchUsers(userId?: string) {
     return await response.json();
   } catch (error) {
     console.error(error);
-    return mockedProductData.users[0] || [];
+    return userId ? mockedProductData.users[0] || [] : mockedProductData.users || [];
   }
 }
 
