@@ -3,7 +3,7 @@ import mockedProductData from "./mockedData.json";
 
 // Fetch products from Fake Store API
 export async function fetchProducts() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
   const url = `${baseUrl}/api/products`;
   try {
     console.log("Fetching products from:", url);
@@ -26,7 +26,7 @@ export async function fetchProducts() {
 
 // Fetch users from Fake Store API
 export async function fetchUsers(userId?: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
   const url = userId ? `${baseUrl}/api/users/${userId}` : `${baseUrl}/api/users`
   console.log("Fetching users from URL:", url); // Debug log  
   try {
@@ -41,7 +41,7 @@ export async function fetchUsers(userId?: string) {
 
 // Fetch cart from Fake Store API
 export async function fetchCart(userId: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
   const url = `${baseUrl}/api/carts/${userId}`
   // const url = `www.fakestoreapi.com/carts`;
   console.log("Fetching cart from URL:", url); // Debug log
