@@ -35,7 +35,7 @@ export async function fetchUsers(userId?: string) {
     return await response.json();
   } catch (error) {
     console.error(error);
-    return mockedProductData.users || [];
+    return mockedProductData.users[0] || [];
   }
 }
 
@@ -51,6 +51,6 @@ export async function fetchCart(userId: string) {
     return await response.json();
   } catch (error) {
     console.error(error);
-    return mockedProductData.carts || [];
+    return mockedProductData.carts[0] || [];
   }
 }
