@@ -28,7 +28,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
     email: initialUser.email,
     phone: initialUser.phone,
     street: initialUser.address.street,
-    number: initialUser.address.number,
+    number: String(initialUser.address.number),
     city: initialUser.address.city,
     zipcode: initialUser.address.zipcode,
     lat: initialUser.address.geolocation.lat,
@@ -91,7 +91,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
           },
           address: {
             street: formData.street,
-            number: parseInt(formData.number) || formData.number,
+            number: parseInt(formData.number) || 0,
             city: formData.city,
             zipcode: formData.zipcode,
             geolocation: {
@@ -306,7 +306,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                       email: initialUser.email,
                       phone: initialUser.phone,
                       street: initialUser.address.street,
-                      number: initialUser.address.number,
+                      number: String(initialUser.address.number),
                       city: initialUser.address.city,
                       zipcode: initialUser.address.zipcode,
                       lat: initialUser.address.geolocation.lat,
