@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getUser, updateUser, deleteUser } from "../../../../lib/blobClient";
+import { getUser, updateUser, deleteUser, getAllUsers, writeToBlob } from "../../../../lib/blobClient";
 
 export async function GET(
   request: Request,
@@ -28,8 +28,20 @@ export async function PUT(
     const { userId } = await params;
     const userData = await request.json();
     
-    const updated = await updateUser(userId, userData);
-    return NextResponse.json(updated);
+    // Update individual user file
+    await updateUser(userId, userData);
+    
+    // Also update the users/all.json file
+    const allUsers = await getAllUsers();
+    if (allUsers) {
+      const userIndex = allUsers.findIndex((u: any) => String(u.id) === String(userId));
+      if (userIndex !== -1) {
+        allUsers[userIndex] = userData;
+        await writeToBlob("users/all.json", allUsers);
+      }
+    }
+    
+    return NextResponse.json({ user: userData, success: true });
   } catch (error) {
     console.error("Error updating user:", error);
     return NextResponse.json({ error: "Failed to update user" }, { status: 500 });

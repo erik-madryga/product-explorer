@@ -22,77 +22,90 @@ export const SignInModal = ({ users }: { users: User[] }) => {
     setSignupError(null);
   };
 
-  const handleLogin = async (username: string, password: string) => {
+  const handleLogin = async (username: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
       // Fetch fresh users from API (includes Blob)
       const response = await fetch("/api/users");
       const allUsers = await response.json();
       
-      const userMatch = allUsers.find(
-        (u: User) => u.username === username && u.password === password
-      );
-
-      if (userMatch) {
-        setUser(userMatch);
-        
-        // Check for guest cart to merge
-        const guestCart = useCartStore.getState().cart.find(c => c.userId === 'guest');
-        
-        // Load user's saved cart from Blob
-        try {
-          const cartResponse = await fetch(`/api/carts/${userMatch.id}`);
-          if (cartResponse.ok) {
-            const savedCart = await cartResponse.json();
+      // Check if username exists
+      const userExists = allUsers.find((u: User) => u.username === username);
+      
+      if (!userExists) {
+        setLoginError("Username not found");
+        setUser({} as User);
+        useCartStore.getState().clearCart();
+        setIsLoading(false);
+        return false;
+      }
+      
+      // Check if password matches
+      if (userExists.password !== password) {
+        setLoginError("Password is incorrect");
+        setUser({} as User);
+        useCartStore.getState().clearCart();
+        setIsLoading(false);
+        return false;
+      }
+      
+      // Both username and password are correct
+      const userMatch = userExists;
+      setUser(userMatch);
+      
+      // Check for guest cart to merge
+      const guestCart = useCartStore.getState().cart.find(c => c.userId === 'guest');
+      
+      // Load user's saved cart from Blob
+      try {
+        const cartResponse = await fetch(`/api/carts/${userMatch.id}`);
+        if (cartResponse.ok) {
+          const savedCart = await cartResponse.json();
+          
+          // If there's a guest cart, merge it with the saved cart
+          if (guestCart) {
+            const mergedItems = [...savedCart.products, ...guestCart.products];
+            savedCart.products = mergedItems;
+            savedCart.userId = userMatch.id;
+          }
+          
+          useCartStore.getState().setCart([savedCart]);
+          
+          // Save merged cart back to Blob
+          await fetch(`/api/carts/${userMatch.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(savedCart),
+          });
+        } else {
+          // No saved cart, use guest cart if available or start fresh
+          if (guestCart) {
+            guestCart.userId = userMatch.id;
+            useCartStore.getState().setCart([guestCart]);
             
-            // If there's a guest cart, merge it with the saved cart
-            if (guestCart) {
-              const mergedItems = [...savedCart.products, ...guestCart.products];
-              savedCart.products = mergedItems;
-              savedCart.userId = userMatch.id;
-            }
-            
-            useCartStore.getState().setCart([savedCart]);
-            
-            // Save merged cart back to Blob
+            // Save guest cart as user's cart to Blob
             await fetch(`/api/carts/${userMatch.id}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(savedCart),
+              body: JSON.stringify(guestCart),
             });
           } else {
-            // No saved cart, use guest cart if available or start fresh
-            if (guestCart) {
-              guestCart.userId = userMatch.id;
-              useCartStore.getState().setCart([guestCart]);
-              
-              // Save guest cart as user's cart to Blob
-              await fetch(`/api/carts/${userMatch.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(guestCart),
-              });
-            } else {
-              useCartStore.getState().clearCart();
-            }
+            useCartStore.getState().clearCart();
           }
-        } catch (error) {
-          console.error("Error loading cart:", error);
-          useCartStore.getState().clearCart();
         }
-        
-        setLoginError(null);
-      } else {
-        setLoginError("Invalid credentials");
-        setUser({} as User);
+      } catch (error) {
+        console.error("Error loading cart:", error);
         useCartStore.getState().clearCart();
-        console.log("Login failed - no matching user found");
       }
+      
+      setLoginError(null);
+      setIsLoading(false);
+      return true;
     } catch (error) {
       console.error("Login error:", error);
       setLoginError("An error occurred. Please try again.");
-    } finally {
       setIsLoading(false);
+      return false;
     }
   };
 
@@ -244,8 +257,10 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                           e.preventDefault();
                           const username = e.currentTarget.username.value;
                           const password = e.currentTarget.password.value;
-                          handleLogin(username, password).then(() => {
-                            setIsSignInModalVisible(false);
+                          handleLogin(username, password).then((success) => {
+                            if (success) {
+                              setIsSignInModalVisible(false);
+                            }
                           });
                         }}
                       >
