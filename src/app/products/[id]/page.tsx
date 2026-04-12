@@ -8,6 +8,7 @@ import {
   CButton,
 } from "@coreui/react";
 import { fetchProducts } from "../../../lib/fakeStoreApi";
+import AddToCartButton from "../../../components/Cart/AddToCartButton";
 
 export default async function ProductPage({
   params,
@@ -51,9 +52,7 @@ export default async function ProductPage({
           </CCardText>
         </div>
       </CCardBody>
-      <button className="w-full border-2 border-yellow-500 bg-yellow-500 text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-yellow-400">
-        Add to Cart
-      </button>
+      <AddToCartButton productId={product.id} />
     </CCard>
   );
 }

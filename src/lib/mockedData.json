@@ -28,18 +28,18 @@
         "lat": "-37.3159",
         "long": "81.1496"
       },
-      "city": "kilcoole",
+      "city": "Metropolis",
       "street": "Lovers Ln",
       "number": 7267,
       "zipcode": "12926-3874"
     },
     "id": 2,
-    "email": "morrison@gmail.com",
-    "username": "mor_2314",
-    "password": "83r5^_",
+    "email": "superman@gmail.com",
+    "username": "superman",
+    "password": "krypto",
     "name": {
-      "firstname": "david",
-      "lastname": "morrison"
+      "firstname": "clark",
+      "lastname": "kent"
     },
     "phone": "1-570-236-7033",
     "__v": 0

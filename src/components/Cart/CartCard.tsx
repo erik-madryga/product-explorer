@@ -32,25 +32,39 @@ export default function CartCard({ cart, onViewDetails }: CartCardProps) {
     <div className="w-full max-w-4xl mx-auto border p-4 rounded shadow">
       <CCard className="max-w-xl">
         <CCardBody>
-          <CCardTitle>Order #{cart.id}</CCardTitle>
+          <CCardTitle><strong>Order:</strong> {cart.id}</CCardTitle>
           <CCardText className="text-sm">
             <strong>Date:</strong> {new Date(cart.date).toLocaleDateString()}
           </CCardText>
           <div className="flex flex-col gap-1 mb-2">
             <span className="text-sm font-semibold">Products:</span>
+            <div/>
             <ul className="pl-0">
               {cart.products.map((item, idx) => {
                 const product = products.find((p) => String(p.id) === String(item.productId));
+                const itemTotal = product ? product.price * item.quantity : 0;
                 return (
-                  <li key={idx} className="flex items-center gap-2 mb-2">
-                    {product && (
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="w-10 h-10 object-contain border rounded pl-0"
-                      />
-                    )}
-                    <span>{product?.title} x {item.quantity}</span>
+                  <li key={idx} className="flex items-center justify-between gap-3 mb-3 pb-2">
+                    <div className="flex items-center gap-2 flex-1">
+                      {product && (
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          className="w-10 h-10 object-contain border rounded pl-0"
+                        />
+                      )}
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">{product?.title}</p>
+                        <p className="text-xs text-gray-600">
+                          ${product?.price.toFixed(2)} × {item.quantity}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-purple-600">
+                        ${itemTotal.toFixed(2)}
+                      </p>
+                    </div>
                   </li>
                 );
               })}

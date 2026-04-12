@@ -1,30 +1,43 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useProductStore } from "../store/productStore";
 import { User } from "./User/user.types";
 import { useUserStore } from "../store/userStore";
+import { useCartStore } from "../store/cartStore";
 import Link from "next/link";
 
 export const SignInModal = ({ users }: { users: User[] }) => {
   const [isSignInModalVisible, setIsSignInModalVisible] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
   const { setUser, user } = useUserStore();
+  const router = useRouter();
   const onSignInClick = () => {
     setIsSignInModalVisible((v) => !v);
   };
 
   const handleLogin = (username: string, password: string) => {
+    console.log("Attempting login with:", username, password);
+    console.log("Available users:", users);
     const userMatch = users.find((u) => u.username === username && u.password === password);
-    setUser(userMatch || ({} as User));
-    if (userMatch?.username) {
-      console.log("User logged in:", userMatch);
+    console.log("User match result:", userMatch);
+    
+    if (userMatch) {
+      setUser(userMatch);
+      // Clear cart for new user session
+      useCartStore.getState().clearCart();
+      setLoginError(null);
     } else {
-      console.log("Invalid credentials");
+      setLoginError("Invalid credentials");
+    useCartStore.getState().clearCart();
+      setUser({} as User);
+      console.log("Login failed - no matching user found");
     }
   };
 
   const handleLogout = () => {
     setUser({} as User);
-    console.log("User logged out");
+    router.push("/");
     setIsSignInModalVisible(false);
   };
 
@@ -92,6 +105,9 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                     >
                       Sign In
                     </button>
+                    {loginError && (
+                      <p className="text-red-600 text-sm mt-2">{loginError}</p>
+                    )}
                   </form>
                 </>
               )}
