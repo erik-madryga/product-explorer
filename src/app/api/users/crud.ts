@@ -1,21 +1,13 @@
 import { NextResponse } from "next/server";
-import { getAllUsers, updateUser } from "../../../lib/blobClient";
-import mockedData from "../../../lib/mockedData.json";
+import { getAllUsers, updateUser, deleteUser } from "../../../lib/blobClient";
 
 export async function GET() {
   try {
     const users = await getAllUsers();
-    
-    // If no users in Blob, return mocked data as fallback
-    if (!users || users.length === 0) {
-      return NextResponse.json(mockedData.users || []);
-    }
-    
-    return NextResponse.json(users);
+    return NextResponse.json(users || []);
   } catch (error) {
     console.error("Error fetching users:", error);
-    // Fallback to mocked data on error
-    return NextResponse.json(mockedData.users || []);
+    return NextResponse.json({ error: "Failed to fetch users" }, { status: 500 });
   }
 }
 

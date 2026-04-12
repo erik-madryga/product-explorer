@@ -1,21 +1,13 @@
 import { NextResponse } from "next/server";
-import { getAllProducts, updateProduct } from "../../../lib/blobClient";
-import mockedData from "../../../lib/mockedData.json";
+import { getAllProducts, updateProduct, deleteProduct } from "../../../lib/blobClient";
 
 export async function GET() {
   try {
     const products = await getAllProducts();
-    
-    // If no products in Blob, return mocked data as fallback
-    if (!products || products.length === 0) {
-      return NextResponse.json(mockedData.products || []);
-    }
-    
-    return NextResponse.json(products);
+    return NextResponse.json(products || []);
   } catch (error) {
     console.error("Error fetching products:", error);
-    // Fallback to mocked data on error
-    return NextResponse.json(mockedData.products || []);
+    return NextResponse.json({ error: "Failed to fetch products" }, { status: 500 });
   }
 }
 

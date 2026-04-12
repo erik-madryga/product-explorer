@@ -15,10 +15,10 @@ export default function AddToCartButton({
 }: AddToCartButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const { addItemToCart } = useCartStore();
+  const { cart, addItemToCart } = useCartStore();
   const { user } = useUserStore();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!user) {
       setMessage('Please log in first');
       setTimeout(() => setMessage(null), 3000);
@@ -26,10 +26,27 @@ export default function AddToCartButton({
     }
 
     setIsLoading(true);
-    addItemToCart(productId, quantity, user.id);
-    setMessage('Product added to cart!');
-    setIsLoading(false);
-    setTimeout(() => setMessage(null), 3000);
+    try {
+      addItemToCart(productId, quantity, user.id);
+      
+      // Save cart to Blob
+      const updatedCart = useCartStore.getState().cart[0];
+      if (updatedCart) {
+        await fetch(`/api/carts/${user.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedCart),
+        });
+      }
+      
+      setMessage('Product added to cart!');
+    } catch (error) {
+      console.error('Error saving cart:', error);
+      setMessage('Error saving to cart');
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => setMessage(null), 3000);
+    }
   };
 
   return (

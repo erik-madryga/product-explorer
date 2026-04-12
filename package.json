@@ -14,6 +14,7 @@
     "@coreui/react": "5.9.1",
     "@headlessui/react": "^2.2.9",
     "@heroicons/react": "^2.0.18",
+    "@vercel/blob": "^2.3.3",
     "axios": "^1.5.0",
     "framer-motion": "^10.12.16",
     "next": "^15.0.0",
