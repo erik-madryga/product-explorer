@@ -31,7 +31,12 @@ export async function fetchUsers(userId?: string) {
     return await response.json();
   } catch (error) {
     console.error(error);
-    return userId ? mockedProductData.users[0] || [] : mockedProductData.users || [];
+    if (userId) {
+      // Find the specific user from mocked data
+      const user = mockedProductData.users.find((u) => u.id === Number(userId));
+      return user || mockedProductData.users[0];
+    }
+    return mockedProductData.users || [];
   }
 }
 

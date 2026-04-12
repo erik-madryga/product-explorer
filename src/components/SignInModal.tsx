@@ -17,10 +17,7 @@ export const SignInModal = ({ users }: { users: User[] }) => {
   };
 
   const handleLogin = (username: string, password: string) => {
-    console.log("Attempting login with:", username, password);
-    console.log("Available users:", users);
     const userMatch = users.find((u) => u.username === username && u.password === password);
-    console.log("User match result:", userMatch);
     
     if (userMatch) {
       setUser(userMatch);
