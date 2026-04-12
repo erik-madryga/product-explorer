@@ -9,7 +9,9 @@ interface CartState {
   fetchUserCart: (userId: string) => Promise<void>;
   setCart: (cart: Cart[]) => void;
   clearCart: () => void;
-  addItemToCart: (productId: number, quantity: number, userId: number) => void;
+  addItemToCart: (productId: number, quantity: number, userId: number | string) => void;
+  updateItemQuantity: (productId: number, quantity: number) => void;
+  removeItemFromCart: (productId: number) => void;
 }
 
 export const useCartStore = create<CartState>((set) => ({
@@ -27,7 +29,7 @@ export const useCartStore = create<CartState>((set) => ({
   },
   setCart: (cart) => set({ cart }),
   clearCart: () => set({ cart: [] }),
-  addItemToCart: (productId: number, quantity: number, userId: number) => 
+  addItemToCart: (productId: number, quantity: number, userId: number | string) => 
     set((state) => {
       if (state.cart.length === 0) {
         // Create a new cart if none exists
@@ -59,6 +61,44 @@ export const useCartStore = create<CartState>((set) => ({
         // Add new product
         updatedProducts = [...existingCart.products, { productId, quantity }];
       }
+
+      return {
+        cart: [
+          {
+            ...existingCart,
+            products: updatedProducts,
+          },
+        ],
+      };
+    }),
+  updateItemQuantity: (productId: number, quantity: number) =>
+    set((state) => {
+      if (state.cart.length === 0) return { cart: [] };
+      
+      const existingCart = state.cart[0];
+      const updatedProducts = existingCart.products.map((item) =>
+        item.productId === productId
+          ? { ...item, quantity: Math.max(0, quantity) }
+          : item
+      ).filter(item => item.quantity > 0);
+
+      return {
+        cart: [
+          {
+            ...existingCart,
+            products: updatedProducts,
+          },
+        ],
+      };
+    }),
+  removeItemFromCart: (productId: number) =>
+    set((state) => {
+      if (state.cart.length === 0) return { cart: [] };
+      
+      const existingCart = state.cart[0];
+      const updatedProducts = existingCart.products.filter(
+        (item) => item.productId !== productId
+      );
 
       return {
         cart: [

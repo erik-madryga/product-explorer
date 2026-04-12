@@ -19,30 +19,28 @@ export default function AddToCartButton({
   const { user } = useUserStore();
 
   const handleAddToCart = async () => {
-    if (!user) {
-      setMessage('Please log in first');
-      setTimeout(() => setMessage(null), 3000);
-      return;
-    }
-
     setIsLoading(true);
     try {
-      addItemToCart(productId, quantity, user.id);
+      // Use guest ID if not logged in
+      const userId = user?.id || 'guest';
+      addItemToCart(productId, quantity, userId);
       
-      // Save cart to Blob
-      const updatedCart = useCartStore.getState().cart[0];
-      if (updatedCart) {
-        await fetch(`/api/carts/${user.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedCart),
-        });
+      // Only save to Blob if user is logged in
+      if (user) {
+        const updatedCart = useCartStore.getState().cart[0];
+        if (updatedCart) {
+          await fetch(`/api/carts/${user.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedCart),
+          });
+        }
       }
       
-      setMessage('Product added to cart!');
+      setMessage(user ? 'Product added to cart!' : 'Product added to cart! (Logged out - cart will clear when you leave)');
     } catch (error) {
       console.error('Error saving cart:', error);
-      setMessage('Error saving to cart');
+      setMessage('Error adding to cart');
     } finally {
       setIsLoading(false);
       setTimeout(() => setMessage(null), 3000);
@@ -59,9 +57,9 @@ export default function AddToCartButton({
         {isLoading ? 'Adding...' : 'Add to Cart'}
       </button>
       {message && (
-        <p className="mt-2 text-sm text-center text-green-600 font-medium">
+        <div className="fixed bottom-4 right-4 bg-green-100 border-2 border-green-500 text-green-700 px-4 py-3 rounded-md font-medium shadow-lg z-50 max-w-sm animate-in fade-in slide-in-from-bottom-4">
           {message}
-        </p>
+        </div>
       )}
     </div>
   );

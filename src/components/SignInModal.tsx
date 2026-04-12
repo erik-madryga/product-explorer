@@ -36,15 +36,45 @@ export const SignInModal = ({ users }: { users: User[] }) => {
       if (userMatch) {
         setUser(userMatch);
         
+        // Check for guest cart to merge
+        const guestCart = useCartStore.getState().cart.find(c => c.userId === 'guest');
+        
         // Load user's saved cart from Blob
         try {
           const cartResponse = await fetch(`/api/carts/${userMatch.id}`);
           if (cartResponse.ok) {
             const savedCart = await cartResponse.json();
+            
+            // If there's a guest cart, merge it with the saved cart
+            if (guestCart) {
+              const mergedItems = [...savedCart.products, ...guestCart.products];
+              savedCart.products = mergedItems;
+              savedCart.userId = userMatch.id;
+            }
+            
             useCartStore.getState().setCart([savedCart]);
+            
+            // Save merged cart back to Blob
+            await fetch(`/api/carts/${userMatch.id}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(savedCart),
+            });
           } else {
-            // No saved cart, start fresh
-            useCartStore.getState().clearCart();
+            // No saved cart, use guest cart if available or start fresh
+            if (guestCart) {
+              guestCart.userId = userMatch.id;
+              useCartStore.getState().setCart([guestCart]);
+              
+              // Save guest cart as user's cart to Blob
+              await fetch(`/api/carts/${userMatch.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(guestCart),
+              });
+            } else {
+              useCartStore.getState().clearCart();
+            }
           }
         } catch (error) {
           console.error("Error loading cart:", error);

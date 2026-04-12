@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect } from "react";
 import { useProductStore } from "../../store/productStore";
+import { useCartStore } from "../../store/cartStore";
+import { useUserStore } from "../../store/userStore";
 import {
   CButton,
   CCard,
@@ -19,6 +21,8 @@ interface CartCardProps {
 export default function CartCard({ cart, onViewDetails }: CartCardProps) {
   const products = useProductStore((state) => state.products);
   const setProducts = useProductStore((state) => state.setProducts);
+  const { clearCart, updateItemQuantity, removeItemFromCart } = useCartStore();
+  const { user } = useUserStore();
 
   useEffect(() => {
     if (!products || products.length === 0) {
@@ -28,8 +32,43 @@ export default function CartCard({ cart, onViewDetails }: CartCardProps) {
     }
   }, [products, setProducts]);
 
+  const handleClearCart = async () => {
+    clearCart();
+    // If user is logged in (not guest), delete cart from Blob
+    if (user && user.id) {
+      try {
+        await fetch(`/api/carts/${user.id}`, { method: "DELETE" });
+      } catch (error) {
+        console.error("Error deleting cart:", error);
+      }
+    }
+  };
+
+  const handleQuantityChange = (productId: number, newQuantity: number) => {
+    updateItemQuantity(productId, newQuantity);
+  };
+
+  const handleRemoveItem = async (productId: number) => {
+    removeItemFromCart(productId);
+  };
+
   return (
-    <div className="w-full max-w-4xl mx-auto border p-4 rounded shadow">
+    <div className="w-full max-w-4xl mx-auto border p-4 rounded shadow relative">
+      <button
+        onClick={handleClearCart}
+        className="absolute top-4 right-4 text-gray-500 hover:text-red-600 transition p-1"
+        title="Clear cart"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
       <CCard className="max-w-xl">
         <CCardBody>
           <CCardTitle><strong>Order:</strong> {cart.id}</CCardTitle>
@@ -44,7 +83,7 @@ export default function CartCard({ cart, onViewDetails }: CartCardProps) {
                 const product = products.find((p) => String(p.id) === String(item.productId));
                 const itemTotal = product ? product.price * item.quantity : 0;
                 return (
-                  <li key={idx} className="flex items-center justify-between gap-3 mb-3 pb-2">
+                  <li key={idx} className="flex items-center justify-between gap-3 mb-3 pb-2 border-b">
                     <div className="flex items-center gap-2 flex-1">
                       {product && (
                         <img
@@ -56,14 +95,40 @@ export default function CartCard({ cart, onViewDetails }: CartCardProps) {
                       <div className="flex-1">
                         <p className="text-sm font-medium">{product?.title}</p>
                         <p className="text-xs text-gray-600">
-                          ${product?.price.toFixed(2)} × {item.quantity}
+                          ${product?.price.toFixed(2)}
                         </p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-semibold text-purple-600">
-                        ${itemTotal.toFixed(2)}
-                      </p>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
+                          className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-100"
+                        >
+                          −
+                        </button>
+                        <span className="px-3 py-1 min-w-[2.5rem] text-center text-sm font-medium">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
+                          className="px-2 py-1 border border-gray-300 rounded hover:bg-gray-100"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <div className="text-right min-w-[3.5rem]">
+                        <p className="text-sm font-semibold text-purple-600">
+                          ${itemTotal.toFixed(2)}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleRemoveItem(item.productId)}
+                        className="text-red-500 hover:text-red-700 transition text-lg font-bold"
+                        title="Remove item"
+                      >
+                        ×
+                      </button>
                     </div>
                   </li>
                 );

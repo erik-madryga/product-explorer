@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import {
   CButton,
@@ -10,6 +12,7 @@ import {
 
 import { ProductProps } from "./product.types.js";
 import Link from "next/link.js";
+import AddToCartButton from "../Cart/AddToCartButton";
 
 export default function ProductCard({ product }: ProductProps) {
   const handleViewDetails = () => {
@@ -17,8 +20,8 @@ export default function ProductCard({ product }: ProductProps) {
   }
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <CCard className="max-w-xl">
-      <div className="w-full h-48 bg-gray-100 flex items-center justify-center overflow-hidden border">
+      <CCard className="max-w-xl h-96 flex flex-col">
+      <div className="w-full h-48 bg-gray-100 flex items-center justify-center overflow-hidden border flex-shrink-0">
         <CCardImage
           orientation="top"
           src={product.image}
@@ -27,9 +30,9 @@ export default function ProductCard({ product }: ProductProps) {
         />
       </div>
 
-      <CCardBody>
-        <div>
-          <CCardTitle>{product.title}</CCardTitle>
+      <CCardBody className="flex flex-col flex-grow">
+        <div className="flex-grow">
+          <CCardTitle className="line-clamp-2">{product.title}</CCardTitle>
         </div>
         <div>
           <CCardText className="text-sm">
@@ -41,7 +44,14 @@ export default function ProductCard({ product }: ProductProps) {
         <CCardText className="text-sm">
           <strong>Rating:</strong> {product.rating.rate} / 5
         </CCardText>
-        <Link href={`products/${product.id}`} className="underline">View Details</Link>
+        <div className="flex gap-3 mt-4 items-start">
+          <Link href={`products/${product.id}`} className="w-1/3 text-purple-700 underline flex items-center justify-center hover:text-purple-900 transition">
+            View Details
+          </Link>
+          <div className="w-2/3">
+            <AddToCartButton productId={Number(product.id)} />
+          </div>
+        </div>
         </div>
       </CCardBody>
     </CCard>
