@@ -1,13 +1,34 @@
-import { PRODUCTS } from "../constants/strings";
 import mockedProductData from "./mockedData.json";
 
-// Fetch products from Fake Store API
+function getClientApiUrl(path: string) {
+  return typeof window === "undefined" ? null : path;
+}
+
+async function fetchJson(url: string) {
+  const response = await fetch(url);
+  const contentType = response.headers.get("content-type") || "";
+
+  if (!response.ok) {
+    throw new Error(`Response status: ${response.status}`);
+  }
+
+  if (!contentType.includes("application/json")) {
+    throw new Error(`Expected JSON response, received ${contentType || "unknown content type"}`);
+  }
+
+  return response.json();
+}
+
+// Fetch products from the app API in the browser, or local fallback data on the server.
 export async function fetchProducts() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
-  const url = `${baseUrl}/api/products`;
+  const url = getClientApiUrl("/api/products");
+
+  if (!url) {
+    return mockedProductData.products;
+  }
+
   try {
-    const response = await fetch(url);
-    const data = await response.json();
+    const data = await fetchJson(url);
 
     // Basic validation: check if data is an array and not empty
     if (!Array.isArray(data) || data.length === 0) {
@@ -21,33 +42,35 @@ export async function fetchProducts() {
   }
 }
 
-// Fetch users from Fake Store API
+// Fetch users from the app API in the browser, or local fallback data on the server.
 export async function fetchUsers(userId?: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
-  const url = userId ? `${baseUrl}/api/users/${userId}` : `${baseUrl}/api/users`
+  const fallbackUser = userId
+    ? mockedProductData.users.find((u) => u.id === Number(userId)) || mockedProductData.users[0]
+    : mockedProductData.users || [];
+  const url = getClientApiUrl(userId ? `/api/users/${userId}` : "/api/users");
+
+  if (!url) {
+    return fallbackUser;
+  }
+
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Response status: ${response.status}`);
-    return await response.json();
+    return await fetchJson(url);
   } catch (error) {
     console.error(error);
-    if (userId) {
-      // Find the specific user from mocked data
-      const user = mockedProductData.users.find((u) => u.id === Number(userId));
-      return user || mockedProductData.users[0];
-    }
-    return mockedProductData.users || [];
+    return fallbackUser;
   }
 }
 
-// Fetch cart from Fake Store API
+// Fetch cart from the app API in the browser, or local fallback data on the server.
 export async function fetchCart(userId: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || `https://${process.env.VERCEL_URL}`;
-  const url = `${baseUrl}/api/carts/${userId}`
+  const url = getClientApiUrl(`/api/carts/${userId}`);
+
+  if (!url) {
+    return mockedProductData.carts[0] || [];
+  }
+
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Response status: ${response.status}`);
-    return await response.json();
+    return await fetchJson(url);
   } catch (error) {
     console.error(error);
     return mockedProductData.carts[0] || [];
