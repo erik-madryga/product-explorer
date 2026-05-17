@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
 import { useProductStore } from "../store/productStore";
 import { User } from "./User/user.types";
 import { useUserStore } from "../store/userStore";
@@ -224,11 +225,11 @@ export const SignInModal = ({ users }: { users: User[] }) => {
       >
         {user?.username ? `Hi, ${user.username}` : "Sign In"}
       </button>
-      {isSignInModalVisible && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm" onClick={() => setIsSignInModalVisible(false)}>
-          <div className="app-panel w-full max-w-md"
+      {isSignInModalVisible && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-[100] grid place-items-center overflow-y-auto bg-slate-950/50 p-4 backdrop-blur-sm sm:p-6" onClick={() => setIsSignInModalVisible(false)}>
+          <div className="app-panel w-full max-w-md overflow-hidden"
           onClick={e => e.stopPropagation()}>
-            <div className="p-6">
+            <div className="max-h-[calc(100vh-2rem)] overflow-y-auto p-6 sm:max-h-[calc(100vh-3rem)]">
               {user?.username ? (
                 <div>
                   <p className="text-sm text-muted mb-2">Signed in as {user.username}</p>
@@ -304,7 +305,7 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                   ) : (
                     <>
                       <h2 className="text-xl font-semibold mb-4">Create Account</h2>
-                      <form onSubmit={handleSignUp} className="space-y-4 max-h-96 overflow-y-auto pr-1">
+                      <form onSubmit={handleSignUp} className="space-y-4 pr-1">
                         <div className="border-b border-line pb-3">
                           <p className="app-section-label mb-2">Personal Information</p>
                           <input
@@ -435,7 +436,8 @@ export const SignInModal = ({ users }: { users: User[] }) => {
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
