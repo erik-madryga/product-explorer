@@ -2,7 +2,6 @@
 
 import React from "react";
 import {
-  CButton,
   CCard,
   CCardBody,
   CCardImage,
@@ -11,17 +10,35 @@ import {
 } from "@coreui/react";
 
 import { ProductProps } from "./product.types.js";
-import Link from "next/link.js";
+import { useRouter } from "next/navigation";
 import AddToCartButton from "../Cart/AddToCartButton";
 
 export default function ProductCard({ product }: ProductProps) {
-  const handleViewDetails = () => {
-    alert(`Viewing details for: ${product.title}`);
-  }
+  const router = useRouter();
+  const detailsHref = `/products/${product.id}`;
+
+  const openDetails = () => {
+    router.push(detailsHref);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openDetails();
+    }
+  };
+
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <CCard className="max-w-xl h-96 flex flex-col">
-      <div className="w-full h-48 bg-gray-100 flex items-center justify-center overflow-hidden border flex-shrink-0">
+    <div className="w-full">
+      <CCard
+        className="app-card h-full min-h-[27rem] flex cursor-pointer flex-col focus-within:ring-4 focus-within:ring-brand-100"
+        onClick={openDetails}
+        onKeyDown={handleKeyDown}
+        role="link"
+        tabIndex={0}
+        aria-label={`View details for ${product.title}`}
+      >
+      <div className="w-full h-48 bg-slate-50 flex items-center justify-center overflow-hidden border-b border-line flex-shrink-0 p-5">
         <CCardImage
           orientation="top"
           src={product.image}
@@ -30,25 +47,22 @@ export default function ProductCard({ product }: ProductProps) {
         />
       </div>
 
-      <CCardBody className="flex flex-col flex-grow">
+      <CCardBody className="flex flex-col flex-grow p-5">
         <div className="flex-grow">
-          <CCardTitle className="line-clamp-2">{product.title}</CCardTitle>
+          <CCardTitle className="line-clamp-2 text-base font-semibold leading-snug text-ink">{product.title}</CCardTitle>
         </div>
-        <div>
-          <CCardText className="text-sm">
-          <strong>Price:</strong> ${product.price}
+        <div className="mt-4 space-y-2">
+          <CCardText className="text-2xl font-bold text-ink">
+          ${product.price}
         </CCardText>
-        <CCardText className="text-sm">
-          <strong>Category:</strong> {product.category}
+        <CCardText className="text-sm text-muted">
+          <span className="app-section-label">Category</span> {product.category}
         </CCardText>
-        <CCardText className="text-sm">
-          <strong>Rating:</strong> {product.rating.rate} / 5
+        <CCardText className="text-sm text-muted">
+          <span className="app-section-label">Rating</span> {product.rating.rate} / 5
         </CCardText>
-        <div className="flex gap-3 mt-4 items-start">
-          <Link href={`products/${product.id}`} className="w-1/3 text-purple-700 underline flex items-center justify-center hover:text-purple-900 transition">
-            View Details
-          </Link>
-          <div className="w-2/3">
+        <div className="pt-3" onClick={(event) => event.stopPropagation()}>
+          <div>
             <AddToCartButton productId={Number(product.id)} />
           </div>
         </div>

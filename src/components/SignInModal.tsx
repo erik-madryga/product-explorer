@@ -219,22 +219,22 @@ export const SignInModal = ({ users }: { users: User[] }) => {
     <div>
       <button
         onClick={onSignInClick}
-        className="bg-yellow-500 text-purple-700 px-3 py-1 rounded-md font-medium hover:bg-yellow-400 transition"
+        className="app-button-primary px-3 py-1.5"
         type="button"
       >
         {user?.username ? `Hi, ${user.username}` : "Sign In"}
       </button>
       {isSignInModalVisible && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setIsSignInModalVisible(false)}>
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4"
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm" onClick={() => setIsSignInModalVisible(false)}>
+          <div className="app-panel w-full max-w-md"
           onClick={e => e.stopPropagation()}>
-            <div className="p-4">
+            <div className="p-6">
               {user?.username ? (
                 <div>
-                  <p className="text-sm mb-2">Signed in as {user.username}</p>
+                  <p className="text-sm text-muted mb-2">Signed in as {user.username}</p>
                   <Link
                     href={`/user/${user.id}`}
-                    className="text-purple-700 underline block mb-4"
+                    className="app-link block mb-4"
                     onClick={() => setIsSignInModalVisible(false)}
                   >
                     View Profile
@@ -242,7 +242,7 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="bg-purple-700 text-yellow-500 px-4 py-2 rounded-md hover:bg-purple-600 transition"
+                    className="app-button-primary"
                   >
                     Sign Out
                   </button>
@@ -251,7 +251,7 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                 <>
                   {!isSignUpMode ? (
                     <>
-                      <h2 className="text-xl font-semibold mb-2">Sign In</h2>
+                      <h2 className="text-xl font-semibold mb-4">Sign In</h2>
                       <form
                         onSubmit={(e) => {
                           e.preventDefault();
@@ -268,7 +268,7 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                           name="username"
                           type="text"
                           placeholder="Username"
-                          className="border rounded p-2 w-full mb-2"
+                          className="app-input mb-3"
                           required
                           disabled={isLoading}
                         />
@@ -276,14 +276,14 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                           name="password"
                           type="password"
                           placeholder="Password"
-                          className="border rounded p-2 w-full mb-2"
+                          className="app-input mb-3"
                           required
                           disabled={isLoading}
                         />
                         <button
                           type="submit"
                           disabled={isLoading}
-                          className="bg-purple-700 text-yellow-500 px-4 py-2 rounded-md hover:bg-purple-600 transition w-full disabled:opacity-50"
+                          className="app-button-primary w-full"
                         >
                           {isLoading ? "Signing In..." : "Sign In"}
                         </button>
@@ -295,7 +295,7 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                         Don't have an account?{" "}
                         <button
                           onClick={() => setIsSignUpMode(true)}
-                          className="text-purple-700 underline hover:text-purple-600"
+                          className="app-link"
                         >
                           Sign Up
                         </button>
@@ -303,116 +303,116 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                     </>
                   ) : (
                     <>
-                      <h2 className="text-xl font-semibold mb-2">Create Account</h2>
-                      <form onSubmit={handleSignUp} className="space-y-2 max-h-96 overflow-y-auto">
-                        <div className="border-b pb-2">
-                          <p className="text-sm font-semibold text-gray-700 mb-2">Personal Information</p>
+                      <h2 className="text-xl font-semibold mb-4">Create Account</h2>
+                      <form onSubmit={handleSignUp} className="space-y-4 max-h-96 overflow-y-auto pr-1">
+                        <div className="border-b border-line pb-3">
+                          <p className="app-section-label mb-2">Personal Information</p>
                           <input
                             name="firstname"
                             type="text"
                             placeholder="First Name"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input mb-2"
                             required
                           />
                           <input
                             name="lastname"
                             type="text"
                             placeholder="Last Name"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input"
                             required
                           />
                         </div>
 
-                        <div className="border-b pb-2">
-                          <p className="text-sm font-semibold text-gray-700 mb-2">Login Credentials</p>
+                        <div className="border-b border-line pb-3">
+                          <p className="app-section-label mb-2">Login Credentials</p>
                           <input
                             name="username"
                             type="text"
                             placeholder="Username"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input mb-2"
                             required
                           />
                           <input
                             name="email"
                             type="email"
                             placeholder="Email"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input mb-2"
                             required
                           />
                           <input
                             name="password"
                             type="password"
                             placeholder="Password"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input mb-2"
                             required
                           />
                           <input
                             name="confirmPassword"
                             type="password"
                             placeholder="Confirm Password"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input"
                             required
                           />
                         </div>
 
-                        <div className="border-b pb-2">
-                          <p className="text-sm font-semibold text-gray-700 mb-2">Contact Information</p>
+                        <div className="border-b border-line pb-3">
+                          <p className="app-section-label mb-2">Contact Information</p>
                           <input
                             name="phone"
                             type="tel"
                             placeholder="Phone"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input"
                           />
                         </div>
 
-                        <div className="border-b pb-2">
-                          <p className="text-sm font-semibold text-gray-700 mb-2">Address</p>
+                        <div className="border-b border-line pb-3">
+                          <p className="app-section-label mb-2">Address</p>
                           <input
                             name="street"
                             type="text"
                             placeholder="Street"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input mb-2"
                           />
                           <input
                             name="number"
                             type="number"
                             placeholder="Street Number"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input mb-2"
                           />
                           <input
                             name="city"
                             type="text"
                             placeholder="City"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input mb-2"
                           />
                           <input
                             name="zipcode"
                             type="text"
                             placeholder="Zipcode"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input"
                           />
                         </div>
 
                         <div className="pb-2">
-                          <p className="text-sm font-semibold text-gray-700 mb-2">Geolocation (Optional)</p>
+                          <p className="app-section-label mb-2">Geolocation (Optional)</p>
                           <input
                             name="lat"
                             type="text"
                             placeholder="Latitude"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input mb-2"
                           />
                           <input
                             name="long"
                             type="text"
                             placeholder="Longitude"
-                            className="border rounded p-2 w-full mb-2"
+                            className="app-input"
                           />
                         </div>
 
                         <button
                           type="submit"
                           disabled={isLoading}
-                          className="bg-purple-700 text-yellow-500 px-4 py-2 rounded-md hover:bg-purple-600 transition w-full disabled:opacity-50"
+                          className="app-button-primary w-full"
                         >
                           {isLoading ? "Creating..." : "Create Account"}
                         </button>
@@ -424,7 +424,7 @@ export const SignInModal = ({ users }: { users: User[] }) => {
                         Already have an account?{" "}
                         <button
                           onClick={() => setIsSignUpMode(false)}
-                          className="text-purple-700 underline hover:text-purple-600"
+                          className="app-link"
                         >
                           Sign In
                         </button>

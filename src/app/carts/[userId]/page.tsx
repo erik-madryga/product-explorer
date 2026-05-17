@@ -8,16 +8,16 @@ export default function Page() {
   
   if (!cart || cart.length === 0) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-xl font-semibold text-gray-600">Cart is empty</p>
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-xl font-semibold text-muted">Cart is empty</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <section className="lg:col-span-3">
+      <div className="grid grid-cols-1 gap-6">
+        <section>
           <CartPageGrid currentCart={cart[0]} />
         </section>
       </div>

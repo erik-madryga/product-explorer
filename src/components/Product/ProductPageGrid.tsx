@@ -44,11 +44,11 @@ export default function ProductPageGrid({
     setProducts(result);
   }, [search, filters, sort]);
 
-  return (<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  return (<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
       {loading ? (
-        <p>Loading products...</p>
+        <p className="text-muted">Loading products...</p>
       ) : products && products.length === 0 ? (
-        <p>No products found.</p>
+        <p className="text-muted">No products found.</p>
       ) : (
         products.map((product) => (
           <ProductCard key={product.id} product={product} />

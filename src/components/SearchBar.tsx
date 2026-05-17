@@ -24,7 +24,7 @@ export default function SearchBar() {
       value={search}
       onChange={(e) => setSearch(e.target.value)}
       placeholder="Search..."
-      className="w-full max-w-md border rounded px-3 py-2"
+      className="app-input"
     />
   );
 }

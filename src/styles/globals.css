@@ -1,23 +1,90 @@
 @import "tailwindcss";
 
-@layer utilities {
-  button, input, textarea, select {
-    all: revert-layer;
-  }
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-accent-50: #f0fdfa;
+  --color-accent-500: #14b8a6;
+  --color-accent-600: #0d9488;
+  --color-ink: #0f172a;
+  --color-muted: #64748b;
+  --color-surface: #ffffff;
+  --color-canvas: #f8fafc;
+  --color-line: #e2e8f0;
 }
 
-html
-
 body {
-  background-color: rgb(225, 223, 226);
-  color: #1e293b;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.12), transparent 28rem),
+    linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+  color: #0f172a;
+  font-feature-settings: "rlig" 1, "calt" 1;
 }
 
 .dark body {
-  background-color: #3f3f40;
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.16), transparent 28rem),
+    linear-gradient(180deg, #0f172a 0%, #111827 100%);
   color: #f1f5f9;
 }
 
 .gold-fill {
-  fill: gold !important;
+  fill: #f59e0b !important;
+}
+
+@layer components {
+  .app-header {
+    @apply border-b border-line/80 bg-surface/90 text-ink shadow-sm backdrop-blur;
+  }
+
+  .app-card {
+    @apply overflow-hidden rounded-2xl border border-line bg-surface text-ink shadow-sm transition hover:-translate-y-0.5 hover:shadow-md;
+  }
+
+  .app-panel {
+    @apply rounded-2xl border border-line bg-surface text-ink shadow-sm;
+  }
+
+  .app-button-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .app-button-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-line bg-white px-4 py-2 text-sm font-semibold text-ink transition hover:border-brand-100 hover:bg-brand-50;
+  }
+
+  .app-link {
+    @apply font-medium text-brand-700 transition hover:text-brand-800;
+  }
+
+  .app-input {
+    @apply w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink outline-none transition placeholder:text-muted focus:border-brand-600 focus:ring-4 focus:ring-brand-100;
+  }
+
+  .app-section-label {
+    @apply text-xs font-semibold uppercase tracking-wide text-muted;
+  }
+
+  .catalog-backdrop {
+    @apply rounded-3xl border border-white/70 p-4 shadow-sm sm:p-6 lg:p-8;
+    background-color: rgba(248, 250, 252, 0.88);
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(37, 99, 235, 0.12), transparent 24rem),
+      radial-gradient(circle at 88% 18%, rgba(20, 184, 166, 0.12), transparent 22rem),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(226, 232, 240, 0.42)),
+      repeating-linear-gradient(135deg, rgba(15, 23, 42, 0.018) 0 1px, transparent 1px 12px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.75),
+      0 24px 60px rgba(15, 23, 42, 0.06);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }

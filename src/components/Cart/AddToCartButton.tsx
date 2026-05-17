@@ -52,16 +52,15 @@ export default function AddToCartButton({
       <button
         onClick={handleAddToCart}
         disabled={isLoading}
-        className="w-full border-2 border-yellow-500 bg-yellow-500 text-purple-700 px-4 py-2 rounded-md font-medium hover:bg-yellow-400 disabled:opacity-50 disabled:cursor-not-allowed transition"
+        className="app-button-primary w-full"
       >
         {isLoading ? 'Adding...' : 'Add to Cart'}
       </button>
       {message && (
-        <div className="fixed bottom-4 right-4 bg-green-100 border-2 border-green-500 text-green-700 px-4 py-3 rounded-md font-medium shadow-lg z-50 max-w-sm animate-in fade-in slide-in-from-bottom-4">
+        <div className="fixed bottom-4 right-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 shadow-lg z-50 max-w-sm animate-in fade-in slide-in-from-bottom-4">
           {message}
         </div>
       )}
     </div>
   );
 }
-
