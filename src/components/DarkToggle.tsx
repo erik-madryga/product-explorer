@@ -14,7 +14,7 @@ export default function DarkToggle() {
   }
 
   return (
-    <button onClick={toggle} className="px-2 py-1 border rounded">
+    <button onClick={toggle} className="app-button-secondary px-3 py-1.5">
       {isDark ? "Light" : "Dark"}
     </button>
   );

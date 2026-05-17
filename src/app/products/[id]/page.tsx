@@ -5,7 +5,6 @@ import {
   CCardBody,
   CCardTitle,
   CCardText,
-  CButton,
 } from "@coreui/react";
 import { fetchProducts } from "../../../lib/fakeStoreApi";
 import AddToCartButton from "../../../components/Cart/AddToCartButton";
@@ -24,8 +23,8 @@ export default async function ProductPage({
   if (!product) return <div>Product not found</div>;
 
   return (
-    <CCard className="w-full max-w-xl mx-auto">
-      <div className="w-full flex justify-center items-center bg-white p-4 border-2">
+    <CCard className="app-card w-full max-w-2xl mx-auto">
+      <div className="w-full flex justify-center items-center bg-slate-50 p-8 border-b border-line">
     <CCardImage
       orientation="top"
       src={product.image}
@@ -33,26 +32,28 @@ export default async function ProductPage({
       className="max-w-full max-h-64 object-contain"
     />
   </div>
-      <CCardBody>
+      <CCardBody className="p-6 space-y-4">
         <div>
-          <CCardTitle>{product.title}</CCardTitle>
+          <CCardTitle className="text-2xl font-bold text-balance">{product.title}</CCardTitle>
         </div>
-        <div>
-          <CCardText>
-            <strong>Price:</strong> ${product.price}
+        <div className="space-y-3 text-sm text-muted">
+          <CCardText className="text-3xl font-bold text-ink">
+            ${product.price}
           </CCardText>
           <CCardText>
-            <strong>Category:</strong> {product.category}
+            <span className="app-section-label">Category</span> {product.category}
           </CCardText>
           <CCardText>
-            <strong>Rating:</strong> {product.rating.rate} / 5
+            <span className="app-section-label">Rating</span> {product.rating.rate} / 5
           </CCardText>
-          <CCardText>
-            <strong>Description:</strong> {product.description}
+          <CCardText className="leading-6 text-slate-700">
+            {product.description}
           </CCardText>
         </div>
       </CCardBody>
-      <AddToCartButton productId={product.id} />
+      <div className="p-6 pt-0">
+        <AddToCartButton productId={product.id} />
+      </div>
     </CCard>
   );
 }

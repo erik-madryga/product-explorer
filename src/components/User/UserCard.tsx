@@ -137,9 +137,9 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
   if (isEditMode) {
     return (
       <div className="w-full max-w-2xl mx-auto">
-        <CCard>
-          <CCardBody>
-            <CCardTitle className="mb-6">Edit Profile</CCardTitle>
+        <CCard className="app-panel">
+          <CCardBody className="p-6">
+            <CCardTitle className="mb-6 text-2xl font-bold">Edit Profile</CCardTitle>
             
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -150,7 +150,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                     name="firstname"
                     value={formData.firstname}
                     onChange={handleInputChange}
-                    className="border rounded p-2 w-full"
+                    className="app-input"
                   />
                 </div>
                 <div>
@@ -160,7 +160,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                     name="lastname"
                     value={formData.lastname}
                     onChange={handleInputChange}
-                    className="border rounded p-2 w-full"
+                    className="app-input"
                   />
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="border rounded p-2 w-full"
+                  className="app-input"
                 />
               </div>
 
@@ -183,11 +183,11 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="border rounded p-2 w-full"
+                  className="app-input"
                 />
               </div>
 
-              <div className="border-t pt-4">
+              <div className="border-t border-line pt-4">
                 <h3 className="font-semibold mb-3">Address</h3>
                 <div>
                   <label className="block text-sm font-medium mb-1">Street</label>
@@ -196,7 +196,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                     name="street"
                     value={formData.street}
                     onChange={handleInputChange}
-                    className="border rounded p-2 w-full mb-4"
+                    className="app-input mb-4"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -207,7 +207,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                       name="number"
                       value={formData.number}
                       onChange={handleInputChange}
-                      className="border rounded p-2 w-full"
+                      className="app-input"
                     />
                   </div>
                   <div>
@@ -217,7 +217,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
-                      className="border rounded p-2 w-full"
+                      className="app-input"
                     />
                   </div>
                 </div>
@@ -229,22 +229,22 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                       name="zipcode"
                       value={formData.zipcode}
                       onChange={handleInputChange}
-                      className="border rounded p-2 w-full"
+                      className="app-input"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="border-t pt-4">
+              <div className="border-t border-line pt-4">
                 <button
                   onClick={() => setShowPasswordChange(!showPasswordChange)}
-                  className="text-purple-700 font-medium mb-4"
+                  className="app-link mb-4"
                 >
                   {showPasswordChange ? '✕ Cancel Password Change' : '🔐 Change Password'}
                 </button>
 
                 {showPasswordChange && (
-                  <div className="space-y-3 bg-gray-50 p-4 rounded">
+                  <div className="space-y-3 rounded-xl border border-line bg-slate-50 p-4">
                     <div>
                       <label className="block text-sm font-medium mb-1">Current Password</label>
                       <input
@@ -253,7 +253,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                         value={formData.currentPassword}
                         onChange={handleInputChange}
                         placeholder="Enter current password"
-                        className="border rounded p-2 w-full"
+                        className="app-input"
                       />
                     </div>
                     <div>
@@ -264,7 +264,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                         value={formData.newPassword}
                         onChange={handleInputChange}
                         placeholder="Enter new password"
-                        className="border rounded p-2 w-full"
+                        className="app-input"
                       />
                     </div>
                     <div>
@@ -275,7 +275,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
                         placeholder="Confirm new password"
-                        className="border rounded p-2 w-full"
+                        className="app-input"
                       />
                     </div>
                   </div>
@@ -283,7 +283,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
               </div>
 
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded">
+                <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
                   {error}
                 </div>
               )}
@@ -292,7 +292,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                 <button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="flex-1 bg-purple-700 text-yellow-500 px-4 py-2 rounded-md font-medium hover:bg-purple-600 transition disabled:opacity-50"
+                  className="app-button-primary flex-1"
                 >
                   {isSaving ? 'Saving...' : 'Save Changes'}
                 </button>
@@ -316,7 +316,7 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
                       confirmPassword: '',
                     });
                   }}
-                  className="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-md font-medium hover:bg-gray-400 transition"
+                  className="app-button-secondary flex-1"
                 >
                   Cancel
                 </button>
@@ -330,41 +330,41 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <CCard className="max-w-xl">
-        <CCardBody>
+      <CCard className="app-panel max-w-xl">
+        <CCardBody className="p-6">
           <div className="flex justify-between items-start mb-4">
-            <CCardTitle>
+            <CCardTitle className="text-2xl font-bold">
               {initialUser.name.firstname} {initialUser.name.lastname}
             </CCardTitle>
             <button
               onClick={() => setIsEditMode(true)}
-              className="bg-purple-700 text-yellow-500 px-4 py-2 rounded-md hover:bg-purple-600 transition text-sm font-medium"
+              className="app-button-primary"
             >
               ✎ Edit
             </button>
           </div>
           
-          <CCardText className="text-sm">
+          <CCardText className="text-sm text-muted">
             <strong>Username:</strong> {initialUser.username}
           </CCardText>
-          <CCardText className="text-sm">
+          <CCardText className="text-sm text-muted">
             <strong>Email:</strong> {initialUser.email}
           </CCardText>
-          <CCardText className="text-sm">
+          <CCardText className="text-sm text-muted">
             <strong>Phone:</strong> {initialUser.phone}
           </CCardText>
-          <CCardText className="text-sm">
+          <CCardText className="text-sm text-muted">
             <strong>Address:</strong> {initialUser.address.number} {initialUser.address.street}, {initialUser.address.city}, {initialUser.address.zipcode}
           </CCardText>
           
           {success && (
-            <div className="mt-4 p-3 bg-green-50 border border-green-200 text-green-700 rounded text-sm">
+            <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">
               {success}
             </div>
           )}
 
           {onViewDetails && (
-            <button onClick={() => onViewDetails(initialUser.id)} className="underline text-blue-600 mt-2">
+            <button onClick={() => onViewDetails(initialUser.id)} className="app-link mt-2">
               View Details
             </button>
           )}
@@ -373,4 +373,3 @@ export default function UserCard({ user: initialUser, onViewDetails }: UserCardP
     </div>
   );
 }
-

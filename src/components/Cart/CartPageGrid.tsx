@@ -46,11 +46,11 @@ export default function CartPageGrid({ currentCart }: CartPageGridProps) {
   if (!currentCart) return <div>No cart data available.</div>;
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <h3 className="col-span-full text-xl font-bold">Your cart:</h3>
+    <div className="grid grid-cols-1 gap-6">
+      <h3 className="col-span-full text-2xl font-bold">Your cart</h3>
       
         <CartCard key={currentCart.userId} cart={currentCart} />
-      <h3 className="col-span-full text-xl font-bold mt-6">
+      <h3 className="col-span-full text-2xl font-bold mt-2">
         Total Price: ${loading ? "..." : totalPrice.toFixed(2)}
       </h3>
       
