@@ -19,5 +19,11 @@ yarn build
 ```
 yarn dev
 ```
-<img width="955" height="722" style="border: 5px solid black;" alt="Screenshot 2026-05-17 at 5 56 16 AM" src="https://github.com/user-attachments/assets/22c2f5e7-79b5-463e-9156-1171ab3ebd21" />
+<table>
+  <tr>
+    <td>
+      <img width="1020" height="722" alt="Screenshot 2026-05-17 at 5 56 16 AM" src="https://github.com/user-attachments/assets/22c2f5e7-79b5-463e-9156-1171ab3ebd21" />
+    </td>
+  </tr>
+</table>
 
